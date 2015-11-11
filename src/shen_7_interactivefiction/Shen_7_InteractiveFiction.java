@@ -50,10 +50,10 @@ public class Shen_7_InteractiveFiction {
     
     private static void intro() {
         System.out.println("Welcome. This game is going to be brutal. Thank you for your time.");
+        System.out.println("You wake up to the sound of the pounding surf. You look around, and the events of last night slowly come back to you.");
     }
     
     private static void beginning() {
-       System.out.println("You wake up to the sound of the pounding surf. You look around, and the events of last night slowly come back to you.");
        System.out.println("You spot your ship, wrecked to one side on a reef. You seem to be stranded on an island. What will you do?");
        input = scan.nextLine();
        input = scan.nextLine();
@@ -63,7 +63,12 @@ public class Shen_7_InteractiveFiction {
            System.out.println("You enter the ship, and are presented with a fork in the corridor. To one side, you hear cries for help. To the other, you can see the supply storage.");
            input = scan.nextLine();
        } else {
-           System.out.println("You wander around, indecisive. You soon pass out.");
+           System.out.println("You wander around, indecisive. You soon pass out. (- 10 Health)");
+           health = health - 10;
+           health();
+           if (health != 0) {
+               beginning();
+           }
        }
     }
     
