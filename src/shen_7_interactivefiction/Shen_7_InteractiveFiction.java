@@ -85,6 +85,9 @@ public class Shen_7_InteractiveFiction {
             
         } else if (checkInput("food")) {
              
+        } else {
+            System.out.println("Not valid. Try again");
+            shelterOrFood();
         }
     }
     
@@ -93,8 +96,11 @@ public class Shen_7_InteractiveFiction {
         input = scan.nextLine();
         if (checkInput("help")) {
             saveOne();
-        } else if (checkInput("supplies")) {
+        } else if (checkInput("suppl")) {
              
+        } else {
+            System.out.println("Not valid. Try again");
+            helpOrSelf();
         }
     }
     
