@@ -62,7 +62,7 @@ public class Shen_7_InteractiveFiction {
         input = scan.nextLine();
         input = scan.nextLine();
         if (checkInput("island")) {
-            
+            shelterOrFood();
         } else if (checkInput("ship")) {
             helpOrSelf();
         } else {
@@ -76,8 +76,16 @@ public class Shen_7_InteractiveFiction {
     }
     
     private static void shelterOrFood() {
+        supplies = supplies + rand.nextInt(4);
+        ducttape = ducttape + 1;
+        lumber = lumber + 2;
         System.out.println("(+ 1-3 Supplies) (+ 1 Duct Tape) (+ 2 Lumber) You wander deeper into the island, and find some strange fruit and building materials.");
         System.out.println("You realize it is getting late. You could start building a shelter from the surrounding foliage, or keep looking for food.");
+        if (checkInput("shelter")) {
+            
+        } else if (checkInput("food")) {
+             
+        }
     }
     
     private static void helpOrSelf() {
@@ -95,6 +103,13 @@ public class Shen_7_InteractiveFiction {
         System.out.println("The ship is now tilting dangerously and you only have time to save one group.");
     }
     
+    public static void shipSupplies() {
+        supplies = supplies + rand.nextInt(4) + 2;
+        ducttape = ducttape + 1;
+        lumber = lumber + rand.nextInt(2) + 2;
+        System.out.println("(+ 2-5 Supplies) (+ 1 Duct tape) (+ 2-3 Lumber) You find some supplies. The ship is now tilting dangerously, so you run.");
+    }
+    
     public static void afterShip() {
         System.out.println("After escaping the ship, you have a little bit of time to explore the island. Do you look for food or build a shelter?");
     }
@@ -105,6 +120,14 @@ public class Shen_7_InteractiveFiction {
     
     private static void health() {
         System.out.println("You have " + health + " health.");
+    }
+    
+    private static void checkAll() {
+        System.out.println("You have " + health + " health.");
+        System.out.println("You have " + supplies + " supplies.");
+        System.out.println("You have " + lumber + " lumber.");
+        System.out.println("You have " + ducttape + " ducttape.");
+        System.out.println("You have " + people + " people.");
     }
     
     private static boolean checkInput(String check){
