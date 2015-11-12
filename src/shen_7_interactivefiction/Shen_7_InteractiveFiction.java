@@ -54,22 +54,49 @@ public class Shen_7_InteractiveFiction {
     }
     
     private static void beginning() {
-       System.out.println("You spot your ship, wrecked to one side on a reef. You seem to be stranded on an island. What will you do?");
-       input = scan.nextLine();
-       input = scan.nextLine();
-       if (checkInput("island")) {
-           
-       } else if (checkInput("ship")) {
-           System.out.println("You enter the ship, and are presented with a fork in the corridor. To one side, you hear cries for help. To the other, you can see the supply storage.");
-           input = scan.nextLine();
-       } else {
-           System.out.println("You wander around, indecisive. You soon pass out. (- 10 Health)");
-           health = health - 10;
-           health();
-           if (health != 0) {
-               beginning();
-           }
-       }
+        shipOrIsland();
+    }
+    
+    private static void shipOrIsland() {
+        System.out.println("You spot your ship, wrecked to one side on a reef. You seem to be stranded on an island. What will you do?");
+        input = scan.nextLine();
+        input = scan.nextLine();
+        if (checkInput("island")) {
+            
+        } else if (checkInput("ship")) {
+            helpOrSelf();
+        } else {
+            System.out.println("You wander around, indecisive. You soon pass out. (- 10 Health)");
+            health = health - 10;
+            health();
+            if (health != 0) {
+                shipOrIsland();
+            }
+        }
+    }
+    
+    private static void shelterOrFood() {
+        System.out.println("(+ 1-3 Supplies) (+ 1 Duct Tape) (+ 2 Lumber) You wander deeper into the island, and find some strange fruit and building materials.");
+        System.out.println("You realize it is getting late. You could start building a shelter from the surrounding foliage, or keep looking for food.");
+    }
+    
+    private static void helpOrSelf() {
+        System.out.println("You enter the ship, and are presented with a fork in the corridor. To one side, you hear cries for help. To the other, you can see the supply storage.");
+        input = scan.nextLine();
+        if (checkInput("help")) {
+            saveOne();
+        } else if (checkInput("supplies")) {
+             
+        }
+    }
+    
+    public static void saveOne() {
+        System.out.println("You enter the cabin, and see the carpenter and a crewman unconscious to the left. There are also five crewmen to the right trapped under a timber beam.");
+        System.out.println("The ship is now tilting dangerously and you only have time to save one group.");
+    }
+    
+    public static void afterShip() {
+        System.out.println("After escaping the ship, you have a little bit of time to explore the island. Do you look for food or build a shelter?");
     }
     
     private static void game() {
