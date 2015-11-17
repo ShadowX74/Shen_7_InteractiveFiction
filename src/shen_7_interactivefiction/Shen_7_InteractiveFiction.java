@@ -17,10 +17,10 @@ public class Shen_7_InteractiveFiction {
     /**
      * @param args the command line arguments
      */
-    
     static Scanner scan = new Scanner(System.in);
     static Random rand = new Random();
     static boolean again = true;
+    //stats
     static int health = 80;
     static int supplies = 0;
     static int moreSupplies;
@@ -34,7 +34,7 @@ public class Shen_7_InteractiveFiction {
     static boolean win = false;
     static boolean carpenter = false;
     static String input;
-    
+
     public static void main(String[] args) {
         intro();
         while (again) {
@@ -54,22 +54,21 @@ public class Shen_7_InteractiveFiction {
         }
         exit();
     }
-    
+
     private static void intro() {
         System.out.println("Welcome. This game is going to be brutal. Thank you for your time.");
     }
-    
+
     private static void beginning() { //first cascade of choices to get resources before reaching the hub
         System.out.println("You wake up to the sound of the pounding surf. You look around, and the events of last night slowly come back to you.");
         shipOrIsland();
         //first choice
     }
-    
-    
+
     private static void shipOrIsland() {
         System.out.println("You spot your ship, wrecked to one side on a reef. You seem to be stranded on an island. What will you do?");
         input = scan.nextLine();
-        input = scan.nextLine();
+     //   input = scan.nextLine();
         //compiler removes first input when the game restarts, so there are two
         if (checkInput("island")) { //checks which path to go down
             // adds supplies beforehand so player cannot exploit
@@ -77,13 +76,13 @@ public class Shen_7_InteractiveFiction {
             supplies = supplies + moreSupplies;
             ducttape = ducttape + 1;
             lumber = lumber + 2;
-            System.out.println("(+ " + moreSupplies + "Supplies) (+ 1 Duct Tape) (+ 2 Lumber) You wander deeper into the island, and find some strange fruit and building materials.");
+            System.out.println("(+ " + moreSupplies + " Supplies) (+ 1 Duct Tape) (+ 2 Lumber) You wander deeper into the island, and find some strange fruit and building materials.");
             shelterOrFood();
         } else if (checkInput("ship")) {
             helpOrSelf();
         } else {
             System.out.println("You wander around, indecisive. You soon pass out. (- 10 Health)");
-            health = health - 10;
+            health -= 10;
             health();
             //when health is zero, player loses
             if (health != 0) {
@@ -91,7 +90,7 @@ public class Shen_7_InteractiveFiction {
             }
         }
     }
-    
+
     private static void shelterOrFood() {
         //next choice path
         System.out.println("You realize it is getting late. You could start building a shelter from the surrounding foliage, or keep looking for food.");
@@ -99,14 +98,14 @@ public class Shen_7_InteractiveFiction {
         if (checkInput("shelter")) {
             firstShelter();
         } else if (checkInput("food")) {
-             moarFood();
+            moarFood();
         } else {
             System.out.println("Not valid. Try again");
             shelterOrFood();
             //invalid input restarts choice
         }
     }
-    
+
     private static void helpOrSelf() {
         //next choice path
         System.out.println("You enter the ship, and are presented with a fork in the corridor. To one side, you hear cries for help. To the other, you can see the supply storage.");
@@ -121,8 +120,8 @@ public class Shen_7_InteractiveFiction {
             //invalid input restarts choice
         }
     }
-    
-    public static void saveOne() {
+
+    private static void saveOne() {
         System.out.println("You enter the cabin, and see the carpenter and a crewman unconscious to the left. There are also five crewmen to the right trapped under a timber beam.");
         System.out.println("The ship is now tilting dangerously and you only have time to save one group.");
         input = scan.nextLine();
@@ -130,13 +129,13 @@ public class Shen_7_InteractiveFiction {
             //special person
             carpenter = true;
             //stat increases
-            people = people + 1;
-            System.out.println("You rescue them and successfully escape.");
+            people = people + 2;
+            System.out.println("(+ 2 People) (+ Carpenter) You rescue them and successfully escape.");
             afterShip();
         } else if (checkInput("right")) {
             //more ppl
             people = people + 5;
-            System.out.println("You rescue them and successfully escape.");
+            System.out.println("(+ 5 People) You rescue them and successfully escape.");
             afterShip();
         } else {
             System.out.println("Not valid. Try again");
@@ -144,8 +143,8 @@ public class Shen_7_InteractiveFiction {
             //invalid input restarts choice
         }
     }
-    
-    public static void shipSupplies() {
+
+    private static void shipSupplies() {
         //stat stuff so that the line prints out right
         moreSupplies = rand.nextInt(4) + 2;
         supplies = supplies + moreSupplies;
@@ -153,11 +152,11 @@ public class Shen_7_InteractiveFiction {
         moreLumber = rand.nextInt(2) + 2;
         lumber = lumber + moreLumber;
         //prints exactly how much the player got
-        System.out.println("(+ " + moreSupplies + "Supplies) (+ 1 Duct tape) (+ " + moreLumber + "Lumber) You find some supplies. The ship is now tilting dangerously, so you run.");
+        System.out.println("(+ " + moreSupplies + " Supplies) (+ 1 Duct tape) (+ " + moreLumber + " Lumber) You find some supplies. The ship is now tilting dangerously, so you run.");
         afterShip();
     }
-    
-    public static void afterShip() {
+
+    private static void afterShip() {
         System.out.println("After escaping the ship, you have a little bit of time to explore the island. Do you look for food or build a shelter?");
         input = scan.nextLine();
         //next choice
@@ -170,7 +169,7 @@ public class Shen_7_InteractiveFiction {
             shelterOrFood();
         }
     }
-    
+
     private static void firstShelter() {
         lumber = lumber - 2;
         ducttape = ducttape - 1;
@@ -179,45 +178,51 @@ public class Shen_7_InteractiveFiction {
         System.out.println("(- 2 Lumber) (- 1 Duct Tape) (+ 1 Shelter) You now have a small shelter. It is late, so you fall asleep.");
         game(); //to the main game or hub, beginning is done
     }
-    
+
     private static void moarFood() {
         moreSupplies = rand.nextInt(3) + 2;
         //more supplies for more people
         if (people >= 5) {
             moreSupplies = rand.nextInt(4) + 4;
         }
-        System.out.println("(+ " + moreSupplies + "Supplies" + ") You find more food, but now it is late and you need to sleep.");
+        supplies = supplies + moreSupplies;
+        System.out.println("(+ " + moreSupplies + " Supplies" + ") You find more food, but now it is late and you need to sleep.");
         game(); //to the main game or hub, beginning is done
     }
-    
-    
+
     private static void game() {
+        hub();
+        playAgain();
+    }
+
+    private static void hub() {
+        System.out.println(health);
         while ((winConditions < 10) & (health > 0)) { //while you have not won and are still alive
-            supplies = supplies - people;
-            if (supplies < 0) {
+            moreSupplies = people + 1;
+            supplies = supplies - moreSupplies;
+            if (supplies <= 0) {
+                System.out.println("supply check");
                 health = health - (supplies * 10);
                 //loses health if no supplies
                 supplies = 0;
             }
-            System.out.println("- " + people + " Supplies");
+            System.out.println("(- " + moreSupplies + " Supplies)");
             checkAll(); //prints supplies
-            
+            break;
             //random events
-            
         }
-        playAgain();
     }
-    
+
     private static void normalDay() { // day with no events
         System.out.println("You wake up bright and early, ready to forage for supplies or build more shelter.");
+        input=scan.nextLine();
     }
-    
-    
+
     private static void health() {
         //checks health
         System.out.println("You have " + health + " health.");
     }
-    
+
     private static void checkAll() {
         //tells user what their stats are
         System.out.println("You have " + health + " health.");
@@ -227,19 +232,19 @@ public class Shen_7_InteractiveFiction {
         System.out.println("You have " + people + " people.");
         System.out.println("You have " + shelter + " shelter.");
     }
-    
-    private static boolean checkInput(String check){
+
+    private static boolean checkInput(String check) {
         //checks user input with my choice
         return input.toLowerCase().contains(check);
     }
-      
+
     private static void playAgain() {
         //play again
         System.out.println("Game over.");
         System.out.println("Would you like to play again? (Y/N)");
         again = scan.next().toUpperCase().contains("Y"); //so it still regisers if user types y or yes
     }
-    
+
     private static void exit() {
         System.out.println("Thank you for playing! Please play again soon!"); //exit
     }
