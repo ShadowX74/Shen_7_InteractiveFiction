@@ -38,8 +38,6 @@ public class Shen_7_InteractiveFiction {
     public static void main(String[] args) {
         intro();
         while (again) {
-            beginning();
-            game();
             //resets all stats
             health = 80;
             supplies = 0;
@@ -51,6 +49,8 @@ public class Shen_7_InteractiveFiction {
             win = false;
             carpenter = false;
             input = "";
+            beginning();
+            game();
         }
         exit();
     }
@@ -68,7 +68,7 @@ public class Shen_7_InteractiveFiction {
     private static void shipOrIsland() {
         System.out.println("You spot your ship, wrecked to one side on a reef. You seem to be stranded on an island. What will you do?");
         input = scan.nextLine();
-     //   input = scan.nextLine();
+        input = scan.nextLine();
         //compiler removes first input when the game restarts, so there are two
         if (checkInput("island")) { //checks which path to go down
             // adds supplies beforehand so player cannot exploit
@@ -200,9 +200,8 @@ public class Shen_7_InteractiveFiction {
         while ((winConditions < 10) & (health > 0)) { //while you have not won and are still alive
             moreSupplies = people + 1;
             supplies = supplies - moreSupplies;
-            if (supplies <= 0) {
-                System.out.println("supply check");
-                health = health - (supplies * 10);
+            if (supplies <= -1) {
+                health = health - 10;
                 //loses health if no supplies
                 supplies = 0;
             }
@@ -214,8 +213,11 @@ public class Shen_7_InteractiveFiction {
     }
 
     private static void normalDay() { // day with no events
-        System.out.println("You wake up bright and early, ready to forage for supplies or build more shelter.");
+        System.out.println("You wake up bright and early, ready to forage for supplies or build more shelter. (food/# shelter)");
         input=scan.nextLine();
+        if (checkInput("food")) {
+            
+        } else
     }
 
     private static void health() {
