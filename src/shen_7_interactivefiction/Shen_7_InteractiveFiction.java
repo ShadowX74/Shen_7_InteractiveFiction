@@ -34,6 +34,7 @@ public class Shen_7_InteractiveFiction {
     static boolean win = false;
     static boolean carpenter = false;
     static String input;
+    static int inputNum;
 
     public static void main(String[] args) {
         intro();
@@ -213,12 +214,45 @@ public class Shen_7_InteractiveFiction {
     }
 
     private static void normalDay() { // day with no events
-        System.out.println("You wake up bright and early, ready to forage for supplies or build more shelter. (food/# shelter)");
-        input=scan.nextLine();
-        if (checkInput("food")) {
-            
-        } else
-    }
+        System.out.println("You wake up bright and early the next day, ready to forage for supplies or build more shelter.");
+        input = scan.nextLine();
+        if (checkInput("food")) {//more supplies
+            moreSupplies = rand.nextInt(3) + 2;
+            //more supplies for more people
+            for (int i = 0; i < people; i = i + 2) {
+                moreSupplies++;
+            }
+            supplies = supplies + moreSupplies;
+            System.out.println("(+ " + moreSupplies + " Supplies" + ") You find more food.");
+            game(); //to the hub
+        } else if (checkInput("shelter")) {
+            int shelter1 = 0;//how much your supplies will allow
+            int shelter2 = 0;
+            for (int i = 0; i < lumber; i = i + 2) {
+                shelter1++;
+            }
+            for (int i = 0; i < ducttape; i++) {
+                shelter2++;
+            }
+            if (shelter1 > shelter2) {
+                System.out.println("You can build " + shelter2 + " shelter.");
+            } else {
+                System.out.println("You can build " + shelter1 + " shelter.");
+            }
+            System.out.println("How much shelter do you want to build?");
+            inputNum = scan.nextInt();//gives choice to preserve some supplies
+            if (inputNum <= shelter1 & inputNum >= 0) {
+                shelter = shelter + inputNum;
+                System.out.println("(+ " + inputNum + " Shelter) You build more shelter.");
+            } else {
+                System.out.println("Invalid number");
+                normalDay();
+            }//resets
+        } else {
+            System.out.println("Invalid input, try again");
+            normalDay();
+        }//resets
+    }//then back to hub
 
     private static void health() {
         //checks health
