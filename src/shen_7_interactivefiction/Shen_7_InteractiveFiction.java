@@ -30,6 +30,10 @@ public class Shen_7_InteractiveFiction {
     static int moreTape;
     static int people = 0;
     static int shelter = 0;
+    static int weapons = 0;
+    static int moreWeapons = 0;
+    static boolean sick = false;
+    static int sickDays = 0;
     static int winConditions = 0;
     static boolean win = false;
     static boolean carpenter = false;
@@ -46,6 +50,7 @@ public class Shen_7_InteractiveFiction {
             ducttape = 0;
             people = 0;
             shelter = 0;
+            weapons = 0;
             winConditions = 0;
             win = false;
             carpenter = false;
@@ -56,6 +61,7 @@ public class Shen_7_InteractiveFiction {
         exit();
     }
 
+    //beginning collection of supplies
     private static void intro() {
         System.out.println("Welcome. This game is going to be brutal. Thank you for your time.");
     }
@@ -152,8 +158,9 @@ public class Shen_7_InteractiveFiction {
         ducttape = ducttape + 1;
         moreLumber = rand.nextInt(2) + 2;
         lumber = lumber + moreLumber;
+        weapons = weapons + 2;
         //prints exactly how much the player got
-        System.out.println("(+ " + moreSupplies + " Supplies) (+ 1 Duct tape) (+ " + moreLumber + " Lumber) You find some supplies. The ship is now tilting dangerously, so you run.");
+        System.out.println("(+ " + moreSupplies + " Supplies) (+ 1 Duct tape) (+ " + moreLumber + " Lumber) (+ 2 Weapons) You find some supplies. The ship is now tilting dangerously, so you run.");
         afterShip();
     }
 
@@ -191,14 +198,25 @@ public class Shen_7_InteractiveFiction {
         game(); //to the main game or hub, beginning is done
     }
 
+    //end of beginning, now random events
     private static void game() {
         hub();
         playAgain();
     }
 
     private static void hub() {
+        int day = 1;
+        if (sick == true) { //if you are sick, you lose health
+            sickDays = sickDays++;
+            System.out.println("You are sick. (- 10 Health)");
+            health = health - 10;
+        } else {
+            sickDays = 0;
+        }
         System.out.println(health);
         while ((winConditions < 10) & (health > 0)) { //while you have not won and are still alive
+            day++; //prints out what day it is
+            System.out.println("It is Day " + day);
             moreSupplies = people + 1;
             supplies = supplies - moreSupplies;
             if (supplies <= -1) {
@@ -208,7 +226,26 @@ public class Shen_7_InteractiveFiction {
             }
             System.out.println("(- " + moreSupplies + " Supplies)");
             checkAll(); //prints supplies
-            break;
+            int event = rand.nextInt(13); //event number
+            if (sick == true) {
+                System.out.println("You are sick and cannot do anything today."); //if sick
+            } else if (event <= 4) { //randomized events
+                normalDay();
+            } else if (event == 5) {
+                wreckedShip();
+            } else if (event == 6) {
+                sunkenShip();
+            } else if (event == 7) {
+               storm();
+            } else if (event == 8) {
+                rain();
+            } else if (event == 9) {
+                wildBoar();
+            } else if (event == 10) {
+                
+            } else if (event == 11) {
+                
+            }
             //random events
         }
     }
@@ -251,9 +288,45 @@ public class Shen_7_InteractiveFiction {
         } else {
             System.out.println("Invalid input, try again");
             normalDay();
-        }//resets
-    }//then back to hub
+        }//resets //then back to hub
+    }
 
+    private static void wreckedShip() {
+        System.out.println("");
+        winConditions++;
+    }
+
+    private static void sunkenShip() {
+        System.out.println("");
+        winConditions++;
+    }
+    
+    private static void storm() {
+        System.out.println("");
+        winConditions++;
+    }
+
+    private static void rain() {
+        System.out.println("It starts raining.");
+        if (shelter > 0) {
+            System.out.println("You shelter your shelter, and wait out the rain.");
+        } else if (people > 2) {
+            System.out.println("You huddle with your friends, and stave off hypothermia, but get sick. (Sick)");
+            sick = true;
+        } else {
+            System.out.println("You get hypothermia and get sick. (- 10 Health) (Sick)");
+            health = health - 10;
+            sick = true;
+        }
+        winConditions++;
+    }
+
+    private static void wildBoar() {
+        System.out.println("");
+        winConditions++;
+    }
+
+    //functionality methods
     private static void health() {
         //checks health
         System.out.println("You have " + health + " health.");
@@ -267,6 +340,7 @@ public class Shen_7_InteractiveFiction {
         System.out.println("You have " + ducttape + " ducttape.");
         System.out.println("You have " + people + " people.");
         System.out.println("You have " + shelter + " shelter.");
+        System.out.println("You have " + weapons + " weapons.");
     }
 
     private static boolean checkInput(String check) {
