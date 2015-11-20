@@ -67,7 +67,8 @@ public class Shen_7_InteractiveFiction {
     }
 
     private static void beginning() { //first cascade of choices to get resources before reaching the hub
-        System.out.println("You wake up to the sound of the pounding surf. You look around, and the events of last night slowly come back to you.");
+        System.out.println("You wake up to the sound of the pounding surf. You look around, and the events of last night slowly come back to you."); //#hero
+        System.out.println("(Type your answer twice if you are not restarting)");
         shipOrIsland();
         //first choice
     }
@@ -91,7 +92,7 @@ public class Shen_7_InteractiveFiction {
             System.out.println("You wander around, indecisive. You soon pass out. (- 10 Health)");
             health -= 10;
             health();
-            //when health is zero, player loses
+            //when health is zero, player loses #forthelose
             if (health != 0) {
                 shipOrIsland();
             }
@@ -199,12 +200,12 @@ public class Shen_7_InteractiveFiction {
     }
 
     //end of beginning, now random events
-    private static void game() {
+    private static void game() { //#method1()
         hub();
         playAgain();
     }
 
-    private static void hub() {
+    private static void hub() { //#method2()
         int day = 1;
         if (sick == true) { //if you are sick, you lose health
             sickDays = sickDays++;
@@ -213,8 +214,11 @@ public class Shen_7_InteractiveFiction {
         } else {
             sickDays = 0;
         }
+        if (sickDays == 3) { //heals after being sick for 3 days
+            sick = false;
+        }
         System.out.println(health);
-        while ((winConditions < 10) & (health > 0)) { //while you have not won and are still alive
+        while ((winConditions < 5) & (health > 0)) { //while you have not won and are still alive #while
             day++; //prints out what day it is
             System.out.println("It is Day " + day);
             moreSupplies = people + 1;
@@ -226,7 +230,7 @@ public class Shen_7_InteractiveFiction {
             }
             System.out.println("(- " + moreSupplies + " Supplies)");
             checkAll(); //prints supplies
-            int event = rand.nextInt(13); //event number
+            int event = rand.nextInt(10); //event number
             if (sick == true) {
                 System.out.println("You are sick and cannot do anything today."); //if sick
             } else if (event <= 4) { //randomized events
@@ -236,21 +240,20 @@ public class Shen_7_InteractiveFiction {
             } else if (event == 6) {
                 sunkenShip();
             } else if (event == 7) {
-               storm();
+                storm();
             } else if (event == 8) {
                 rain();
             } else if (event == 9) {
                 wildBoar();
-            } else if (event == 10) {
-                
-            } else if (event == 11) {
-                
             }
             //random events
         }
+        if (winConditions == 5) { //after the player has gone through enough events #forthewin
+            escape();
+        }
     }
 
-    private static void normalDay() { // day with no events
+    private static void normalDay() { //day with no events #method3()
         System.out.println("You wake up bright and early the next day, ready to forage for supplies or build more shelter.");
         input = scan.nextLine();
         if (checkInput("food")) {//more supplies
@@ -292,28 +295,48 @@ public class Shen_7_InteractiveFiction {
     }
 
     private static void wreckedShip() {
-        System.out.println("");
-        winConditions++;
+        System.out.println("You spot a wrecked ship on the shore.");
+        input = scan.nextLine();
+        if (checkInput("ship")) { //bad choice
+            System.out.println("You approach the ship, only to be scythed down by arrows. As you are dying, you spot a giant airship descending...");
+            health = 0;
+        } else { //survive
+            System.out.println("You are wary, and don't go near.");
+            winConditions++;
+        }
     }
 
     private static void sunkenShip() {
-        System.out.println("");
+        System.out.println("You spot a sunken ship in the shallow water.");
+        input = scan.nextLine();
+        if (checkInput("ship")) { //gets supplies from ship
+            System.out.println("(+ 10 Supplies) (+ 5 Lumber) (+ 2 Duct Tape) (+ 2 Weapons)");
+            System.out.println("You approach the ship, and find some supplies.");
+            supplies = supplies + 10;
+            lumber = lumber + 5;
+            ducttape = ducttape + 2;
+            weapons = weapons + 2;
+        } else { //nothing
+            System.out.println("You are wary, and don't go near.");
+        }
         winConditions++;
     }
-    
-    private static void storm() {
-        System.out.println("");
+
+    private static void storm() { //event
+        System.out.println("A giant storm sweeps through, destroying your shelter and sweeping away some supplies. (Shelter = 0) (- 4 Supplies)");
+        shelter = 0;
+        supplies = supplies - 4;
         winConditions++;
     }
 
     private static void rain() {
         System.out.println("It starts raining.");
-        if (shelter > 0) {
+        if (shelter > 0) { //if you have shelter
             System.out.println("You shelter your shelter, and wait out the rain.");
-        } else if (people > 2) {
+        } else if (people > 2) { //if you have no shelter, but people
             System.out.println("You huddle with your friends, and stave off hypothermia, but get sick. (Sick)");
             sick = true;
-        } else {
+        } else { //has neither
             System.out.println("You get hypothermia and get sick. (- 10 Health) (Sick)");
             health = health - 10;
             sick = true;
@@ -321,11 +344,52 @@ public class Shen_7_InteractiveFiction {
         winConditions++;
     }
 
-    private static void wildBoar() {
-        System.out.println("");
-        winConditions++;
+    private static void wildBoar() { //#method4()
+        System.out.println("As you wake up, a wild boar charges out of the bush and snorts at you."); //#enemyobject
+        System.out.println("You have to make a split second choice, flee, fight or feed?");
+        input = scan.nextLine();
+        if (checkInput("flee")) { //instant death
+            System.out.println("You flee before the boar, and it chases you down, knocking you over and mauling you to death.");
+            System.out.println("You have lost."); //never turn your back to an enemy #lose
+            health = 0;
+        } else if (checkInput("fight")) {
+            if (weapons > 0) { //has weapons
+                System.out.println("You grasp your sword and flay the pig. (+ 3 Supplies)");
+                supplies = supplies + 3;
+                winConditions++;
+            } else if (people > 0) { //no weapons, but people to help
+                System.out.println("Your crewmember leaps at the boar, and kills it. However, with its last breath, the boar gores him through. (- 1 Person)");
+                people = people - 1;
+                winConditions++;
+            } else { //no weapons
+                System.out.println("You punch the boar over and over, getting bloodied, while it gores you.");
+                System.out.println("You survive, but barely so. (Health = 10)");
+                health = 10;
+                winConditions++;
+            }
+        } else if (checkInput("feed")) {
+            if (supplies > 0) { //if you have food
+                System.out.println("(- 1 Supply)You feed the boar, and it leaves later in the day.");
+                supplies = supplies - 1;
+                winConditions++;
+            } else { //no food, lose
+                System.out.println("You have nothing to feed it with, so you offer yourself.");
+                System.out.println("You have lost.");
+                health = 0;
+            }
+        } else { //bad input
+            System.out.println("Invalid input, try again");
+            wildBoar();
+        }
     }
 
+    private static void escape() { //#win
+        System.out.println("As you wake up the next day, you spot a ship passing by. Running to the shore, you wave and yell.");
+        System.out.println("They pick you up, and are aastonished by your tale.");
+        System.out.println("You grow rich and famous from your story.");
+        System.out.println("You have won.");
+    }
+    
     //functionality methods
     private static void health() {
         //checks health
@@ -343,7 +407,7 @@ public class Shen_7_InteractiveFiction {
         System.out.println("You have " + weapons + " weapons.");
     }
 
-    private static boolean checkInput(String check) {
+    private static boolean checkInput(String check) { //#method5()
         //checks user input with my choice
         return input.toLowerCase().contains(check);
     }
@@ -352,10 +416,12 @@ public class Shen_7_InteractiveFiction {
         //play again
         System.out.println("Game over.");
         System.out.println("Would you like to play again? (Y/N)");
-        again = scan.next().toUpperCase().contains("Y"); //so it still regisers if user types y or yes
+        again = scan.next().toUpperCase().contains("Y"); //so it still registers if user types y or yes
     }
 
     private static void exit() {
         System.out.println("Thank you for playing! Please play again soon!"); //exit
     }
 }
+
+//Originality: Has randomized events #original
