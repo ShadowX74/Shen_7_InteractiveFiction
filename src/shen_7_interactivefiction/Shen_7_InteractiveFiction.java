@@ -233,15 +233,15 @@ public class Shen_7_InteractiveFiction {
             int event = rand.nextInt(10); //event number
             if (sick == true) {
                 System.out.println("You are sick and cannot do anything today."); //if sick
-            } else if (event <= 4) { //randomized events
+            } else if (event <= 2) { //randomized events
                 normalDay();
             } else if (event == 5) {
                 wreckedShip();
             } else if (event == 6) {
                 sunkenShip();
-            } else if (event == 7) {
+            } else if (event == 7 || event == 3) {
                 storm();
-            } else if (event == 8) {
+            } else if (event == 8 || event == 4) {
                 rain();
             } else if (event == 9) {
                 wildBoar();
@@ -256,7 +256,7 @@ public class Shen_7_InteractiveFiction {
     private static void normalDay() { //day with no events #method3()
         System.out.println("You wake up bright and early the next day, ready to forage for supplies or build more shelter.");
         input = scan.nextLine();
-        if (checkInput("food")) {//more supplies
+        if (checkInput("food") || checkInput("suppl")) {//more supplies
             moreSupplies = rand.nextInt(3) + 2;
             //more supplies for more people
             for (int i = 0; i < people; i = i + 2) {
@@ -369,7 +369,7 @@ public class Shen_7_InteractiveFiction {
             }
         } else if (checkInput("feed")) {
             if (supplies > 0) { //if you have food
-                System.out.println("(- 1 Supply)You feed the boar, and it leaves later in the day.");
+                System.out.println("(- 1 Supply) You feed the boar, and it leaves later in the day.");
                 supplies = supplies - 1;
                 winConditions++;
             } else { //no food, lose
