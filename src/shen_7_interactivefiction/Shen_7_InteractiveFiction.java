@@ -1,22 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package shen_7_interactivefiction;
 
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- *
- * @author ShadowX
- */
 public class Shen_7_InteractiveFiction {
 
-    /**
-     * @param args the command line arguments
-     */
     static Scanner scan = new Scanner(System.in);
     static Random rand = new Random();
     static boolean again = true;
